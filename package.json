@@ -1,0 +1,19 @@
+{
+  "name": "ja-backend",
+  "version": "1.0.0",
+  "description": "a basic app to deploy (by adithi)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "node",
+    "chai"
+  ],
+  "author": "adithi g urs",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
