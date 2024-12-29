@@ -4,8 +4,9 @@ const app = express()
 const port = 4000
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World!') //
 })
+
 
 app.get('/twitter', (req, res) => {
   res.send('Adithi G Urs!')
@@ -21,6 +22,8 @@ app.get('/youtube', (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`)
-
+  
 })
 
+// instead of sending a string we can also send an Array of Objects
+// res.send([{id: 1, name: 'Adithi'}, {id: 2, name: 'Urs'}])
