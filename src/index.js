@@ -5,7 +5,25 @@ import dotenv from "dotenv";
 dotenv.config({
     path: "./env"
 });
+
 connectDB()
+.then(()=>{
+    app.listen(process.env.PORT || 8000 , )
+
+
+    //this code is added by me from
+    app.on("error",((error) => { 
+        console.log("error", error);
+        throw error            
+        
+    }))
+    //this code is added by me till here
+
+})
+.catch((err)=>{
+    console.log("Mongo db connection failde !!" , err);
+    
+})
 
 
 
@@ -23,8 +41,7 @@ connectDB()
 
 
 
-
-//Basic aproach or the Forst approach
+// Basic aproach or the Forst approach
 
 // import mongoose from "mongoose";
 // import { DB_NAME } from "./constants";
