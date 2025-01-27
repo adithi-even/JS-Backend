@@ -21,3 +21,14 @@ app.use(express.cookieParser())  //cookie parser is used to parse the incoming r
 
 
 export { app } 
+
+
+/*
+app.get('/order-pizza', (req, res) => {
+    // 'req' is you asking for a pizza
+    console.log(req.query); // You might say: { size: 'large', toppings: 'extra cheese' }
+  
+    // 'res' is the shop giving you a pizza
+    res.send('Here’s your large pizza with extra cheese!');
+  });
+*/  

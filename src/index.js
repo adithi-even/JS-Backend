@@ -1,4 +1,4 @@
-// require("dotenv").config({ path: "./env"});
+  // require("dotenv").config({ path: "./env"});
 import connectDB from "./db/index.js";
 import dotenv from "dotenv";
 
@@ -39,31 +39,37 @@ connectDB()
 
 
 
+/*
+
+Basic aproach or the Forst approach
+
+import mongoose from "mongoose";
+import { DB_NAME } from "./constants";
+import app from "./app";
+
+const app = express();
 
 
-// Basic aproach or the Forst approach
 
-// import mongoose from "mongoose";
-// import { DB_NAME } from "./constants";
+( async ()=>{
+    try {
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)        //so basically this line is : the url fromteh mongodb atlas and the / comes in the url and then the database name i.e., videotape and its variable name DB_NAME
 
-
-// ( async ()=>{
-//     try {
-//         await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)        //so basically this line is : the url fromteh mongodb atlas and the / comes in the url and then the database name i.e., videotape and its variable name DB_NAME
-
-//         app.on("error",((error) => {
-//             console.log("error", error);
-//             throw error            
+        app.on("error",((error) => {
+            console.log("error", error);
+            throw error            
             
-//         }))
+        }))
 
-//         app.listen (process.env.PORT , ()=>{
-//             console.log(`App is listening to the port ${process.env.PORT}`)
-//         })
+        app.listen (process.env.PORT , ()=>{
+            console.log(`App is listening to the port ${process.env.PORT}`)
+        })
 
 
-//     } catch (error) {
-//         console.log("Error in index.js ",error);
-//         throw error
-//     }
-// })()
+    } catch (error) {
+        console.log("Error in index.js ",error);
+        throw error
+    }
+})()
+
+*/
