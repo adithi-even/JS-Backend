@@ -16,7 +16,14 @@ app.use(express.urlencoded({extended : true , limit : "16kb"})) //urlencoded is 
 app.use(express.static("public"))  //public is the folder name where the images are stored in the server
 app.use(express.cookieParser())  //cookie parser is used to parse the incoming request with cookies
 
+//routes import
 
+import userRouter from './Routes/user.routes.js';
+
+
+//routes declaration
+
+app.use("api/v1/users", userRouter)
 
 
 
