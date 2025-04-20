@@ -1,5 +1,5 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser'; 
 import cors from 'cors';
 
 const app = express()
@@ -14,21 +14,15 @@ app.use(cors({  //TODO:WHAT IS CORS ?
 app.use(express.json({limit : "16kb"}))
 app.use(express.urlencoded({extended : true , limit : "16kb"})) //urlencoded is used to parse the incoming request with urlencoded payload i.e., when the data is sent through the url to the backend we have to pre-inform to the express that there will be data which ia also coming from the url so to handle that we use this urlencoded
 app.use(express.static("public"))  //public is the folder name where the images are stored in the server
-app.use(express.cookieParser())  //cookie parser is used to parse the incoming request with cookies
+app.use(cookieParser())  //cookie parser is used to parse the incoming request with cookies //and is no longer bundled with the express 
 
 //routes import
-
-import userRouter from './Routes/user.routes.js';
-
+import userRouter from './routes/user.routes.js';
 
 //routes declaration
+app.use("/api/v1/users", userRouter)
 
-app.use("api/v1/users", userRouter)
-
-
-
-export { app } 
-
+export { app }    
 
 /*
 app.get('/order-pizza', (req, res) => {
@@ -37,5 +31,4 @@ app.get('/order-pizza', (req, res) => {
   
     // 'res' is the shop giving you a pizza
     res.send('Here’s your large pizza with extra cheese!');
-  });
-*/  
+  })*/
