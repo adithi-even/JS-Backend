@@ -1,5 +1,5 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import ApiError from "../utils/ApiError.js";
+import {ApiError} from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
@@ -33,7 +33,7 @@ export const registerUser = asyncHandler ( async (req,res) => {
     }
     
     // check if user already exists : username or email     
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
     
@@ -65,7 +65,7 @@ export const registerUser = asyncHandler ( async (req,res) => {
         coverImage: coverImage?.url || "",
         email,
         password,
-        username: username.toLowerCare()
+        username: username.toLowerCase()
     })
     
     //remove password and refresh token field from response
