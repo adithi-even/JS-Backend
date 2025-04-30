@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/ApiError.js";
-import User from '../models/user.model.js'
+import { User } from '../models/user.model.js'
 
 export const verifyJWT = asyncHandler(async(req, res, next)=>{ //here if the res is not used then we can just use the undderscore " _ " in the place of the above res like this async(req, _ , next) instead of this async(req, res, next)
   try {
