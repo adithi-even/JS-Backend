@@ -1,4 +1,4 @@
-import {loginUser, logoutUser, registerUser} from '../controllers/user.controller.js';
+import {loginUser, logoutUser, refreshaccessToken, registerUser} from '../controllers/user.controller.js';
 import {Router} from 'express';
 import { upload } from '../middleware/multer.middleware.js';
 import { verifyJWT } from '../middleware/auth.middleware.js';
@@ -29,5 +29,6 @@ router.route("/login").post(loginUser)
 //secured Routes
 
 router.route("/logout").post(verifyJWT, logoutUser) //if you want to understand this why we are suing the verifyJWT as the first parameter then watch JS Backend 55:00 and alos this line is linked to the "next()" in auth.middleware.js //check the video //and also if we have more middleware then we can also use those after the middleware verifyJWT and just call the next() in that particular middleware 
+router.route("/refreshToken").post(refreshaccessToken)
 
 export default router
