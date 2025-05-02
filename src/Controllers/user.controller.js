@@ -4,15 +4,13 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import pkg from 'jsonwebtoken';
+import e from "express";
 const { jwt } = pkg;
 
 //so just by calling this below code with only the user's id (parameter) we can find the user and generate the access token and refreshToken and then save it to the database and return both the access token and refresh token 
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
         
-
-
-
         const user = await User.findById(userId);
         if (!user) {
             throw new ApiError(404, "User not found");
@@ -20,20 +18,12 @@ const generateAccessAndRefreshTokens = async (userId) => {
         console.log("this is the user" , user);
         console.log("Has method generateAccessToken:", typeof user.generateAccessToken);
         console.log("Has method generateRefreshToken:", typeof user.generateRefreshToken);
-
-
         
         //these 2 generateRefreshToken and generateAccessToken are from the user.model.js 
         const accessToken = user.generateAccessToken() //the accesstoken we are gonna give it to the user 
         const refreshToken = user.generateRefreshToken()//but htis refresh token and we are also sending and going to store it in the database so that we dont have to ask the password from the user everytime they tried to login
 
 
-
-
-
-
-
-        
         console.log("this is the tokensssssssss");
         
         user.refreshToken = refreshToken //here we are storing the refresh token in the database
@@ -271,4 +261,54 @@ export const refreshaccessToken = asyncHandler(async(req, res) => {
    } catch (error) {
     throw ApiError(404,"something went wrong in refresgaccessToken");
    }
+})
+
+export const changeCurrentUserPassword = asyncHandler(async(req, res) => {  //from this method we are makeing the user to change the current password
+    const {oldPassword, newpassword, confPassword } = req.body
+    if(!(newpassword === confPassword)){
+       throw new ApiError(404, "new password and confirm password doesn't match") 
+    }
+
+    const user = await User.findById(req.user?._id)
+
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword) //this is gonna give us true or false 
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
+    }
+
+    user.password = newpassword
+    await user.save({validateBeforeSave: false})
+
+    return res.status(200).json(new ApiResponse(200, {}, "Password changed successfully"))
+})
+
+export const getCurrentUser = asyncHandler(async(req, res) => {
+    return res.status(200).json(200, req.user, "current user fetched successfully ")
+})
+
+export const updateAccountDetails = asyncHandler(async(req, res)=>{
+    const{ fullName, email } = req.body;
+
+    if (!fullName || !email) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    const user = User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set:{
+                fullName,
+                email,
+
+            }
+        },
+        {new: true}
+    ).select("-password")
+
+    return res.status(200).json(new ApiError(200, user, "Account details successfully "))
+})
+
+
+export const updateUserAvatar = asyncHandler(async(req, res) => {
+
 })

@@ -80,6 +80,7 @@ userSchema.methods.generateAccessToken = function(){
       }
   )
 }
+
 userSchema.methods.generateRefreshToken = function(){
   console.log("Generating refresh token with:", {
     secret: process.env.REFRESH_TOKEN_SECRET,
