@@ -396,7 +396,7 @@ export const getUserChannelProfile = asyncHandler(async(req, res) => {
                     $size: "$subscribedTo"
                 },
                 isSubscribed:{ //todo :learn
-                    $cond: {
+                    $cond: {  //condition
                         if:{$in: [req.user?._id, "$subscribers.subscriber"]},
                         then: true,
                         else: false
