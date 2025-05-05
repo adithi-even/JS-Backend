@@ -1,4 +1,4 @@
-import {loginUser, logoutUser, refreshaccessToken, registerUser} from '../controllers/user.controller.js';
+import {changeCurrentUserPassword, getCurrentUser, getUserChannelProfile, getWatchHistory, loginUser, logoutUser, refreshaccessToken, registerUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage} from '../controllers/user.controller.js';
 import {Router} from 'express';
 import { upload } from '../middleware/multer.middleware.js';
 import { verifyJWT } from '../middleware/auth.middleware.js';
@@ -26,9 +26,19 @@ router.route("/register").post(
 
 router.route("/login").post(loginUser)
 
-//secured Routes
+//secured Routes //here we are just setting routes for all the controller which we have created in the user.controller.js
 
 router.route("/logout").post(verifyJWT, logoutUser) //if you want to understand this why we are suing the verifyJWT as the first parameter then watch JS Backend 55:00 and alos this line is linked to the "next()" in auth.middleware.js //check the video //and also if we have more middleware then we can also use those after the middleware verifyJWT and just call the next() in that particular middleware 
 router.route("/refreshToken").post(refreshaccessToken)
+router.route("/change-password").post(verifyJWT, changeCurrentUserPassword)
+router.route("/current-user").get(verifyJWT, getCurrentUser)
+router.route("/update-account").patch(verifyJWT, updateAccountDetails)
+router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateUserAvatar)
+router.route("/cover-image").patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage)
+
+router.route("/c/:username").get(verifyJWT, getUserChannelProfile) //since the payload is coming from the params , hence we are using the c = channel and the colen :username
+
+router.route("/history").get(verifyJWT, getWatchHistory)
+
 
 export default router
