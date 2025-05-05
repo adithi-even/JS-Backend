@@ -375,17 +375,17 @@ export const getUserChannelProfile = asyncHandler(async(req, res) => {
             }
         },{
             $lookup:{
-                from: "sucscriptions" , //all the models will get lowercase and to plural , this Subscribtion  => subscriptions
+                from: "subscriptions" , //all the models will get lowercase and to plural , this Subscribtion  => subscriptions
                 localField: "_id",
                 foreignField: "channel",
                 as: "subscribers"
             }
         },{
             $lookup:{
-                from: "sucscriptions" , //all the models will get lowercase and to plural , this Subscribtion  => subscriptions
+                from: "subscriptions" , //all the models will get lowercase and to plural , this Subscribtion  => subscriptions
                 localField: "_id",
                 foreignField: "subscriber",
-                as: "subscriberdTo"
+                as: "subscribedTo"
             }
         },{
             $addFields:{
@@ -405,7 +405,7 @@ export const getUserChannelProfile = asyncHandler(async(req, res) => {
                 
             }
         },{
-            $project: {
+            $project: {  //In MongoDB, $project means projection // and the 1 = include and 0 = exclude
                 fullName: 1,
                 username: 1,
                 subscribersCount: 1,
